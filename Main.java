@@ -15,6 +15,22 @@ public class Main {
         }
         var tokens = tokenizer.tokens();
         printTokens(tokens);
+
+        var parser = new Parser();
+        try {
+            var expr = parser.parseExpr(tokens);
+            System.out.println("Placeholder printed value:");
+            if(expr == null) {
+                System.out.println("");
+            } else {
+                System.out.println(expr);
+            }
+
+            System.out.println("Eval: " + expr.eval());
+        } catch(Exception e) {
+            System.out.println("Exception!!!: " + e);
+            e.printStackTrace();
+        }
     }
 
     private static void printTokens(List<Token> tokens) {

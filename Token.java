@@ -1,3 +1,4 @@
+// TODO: position in the original expression string
 public record Token (String value, Token.Type type) {
     public enum Type {
       NUMBER,

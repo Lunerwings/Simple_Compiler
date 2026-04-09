@@ -46,10 +46,10 @@ public class Tokenizer {
 
         if(!this.currToken.isEmpty()) {
             assert(this.state == TokenState.NUMBER);
-            this.tokens.add(new Token(this.currToken.toString(), TokenType.NUMBER));
+            this.tokens.add(new Token(this.currToken.toString(), Token.Type.NUMBER));
             this.currToken = new StringBuilder();
         }
-        this.tokens.add(new Token("", TokenType.EOF));
+        this.tokens.add(new Token("", Token.Type.EOF));
     }
 
     /**
@@ -77,12 +77,12 @@ public class Tokenizer {
         }
         // from here on, c is a sign or parenthesis
         var tokType = switch(c) {
-            case '(' -> TokenType.LPAREN;
-            case ')' -> TokenType.RPAREN;
-            case '+' -> TokenType.PLUS;
-            case '-' -> TokenType.MINUS;
-            case '*' -> TokenType.MUL;
-            case '/' -> TokenType.DIV;
+            case '(' -> Token.Type.LPAREN;
+            case ')' -> Token.Type.RPAREN;
+            case '+' -> Token.Type.PLUS;
+            case '-' -> Token.Type.MINUS;
+            case '*' -> Token.Type.MUL;
+            case '/' -> Token.Type.DIV;
             default -> throw new TokenizerException();
             // TODO: otherwise, throw an exception
         };
@@ -97,7 +97,7 @@ public class Tokenizer {
         if (c < '1' || c > '9') {
             this.state = TokenState.INIT;
             this.tokens.add(new Token(this.currToken.toString(),
-                        TokenType.NUMBER));
+                        Token.Type.NUMBER));
             this.currToken = new StringBuilder();
             assert(this.currToken.isEmpty());
             this.tokenizeInit(c);

@@ -14,7 +14,10 @@ public class Main {
             System.exit(69);
         }
         var tokens = tokenizer.tokens();
+        printTokens(tokens);
+    }
 
+    private static void printTokens(List<Token> tokens) {
         System.out.print("[");
         if(tokens.size() >= 2) {
             System.out.print(tokens.get(0));

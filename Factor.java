@@ -22,7 +22,7 @@ public record Factor(Token.Type op, Expression lhs, Expression rhs)
                 yield "*";
             }
             case Token.Type.DIV -> {
-                yield "-";
+                yield "/";
             }
             default -> {
                 yield "INVALID";

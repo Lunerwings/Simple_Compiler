@@ -70,7 +70,7 @@ public class Tokenizer {
             // skip whitespace
             return;
         }
-        if (c >= '1' && c <= '9') {
+        if (c >= '0' && c <= '9') {
             this.currToken.append(c);
             this.state = TokenState.NUMBER;
             return;
@@ -94,7 +94,7 @@ public class Tokenizer {
         assert(this.state == TokenState.NUMBER);
         // it's expected that at least the first digit is present
         assert(!this.currToken.isEmpty());
-        if (c < '1' || c > '9') {
+        if (c < '0' || c > '9') {
             this.state = TokenState.INIT;
             this.tokens.add(new Token(this.currToken.toString(),
                         Token.Type.NUMBER));
@@ -105,7 +105,7 @@ public class Tokenizer {
         }
 
         // we're sure it's only from '1' to '9' here
-        assert(c >= '1' && c <= '9');
+        assert(c >= '0' && c <= '9');
         this.currToken.append(c);
     }
 }

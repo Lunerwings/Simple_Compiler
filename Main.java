@@ -40,5 +40,26 @@ public class Main {
         }
         System.out.println("]");
     }
+
+    private static void printParseTree(String[][] sortedTokens){
+        for(int i = 0; i < 2*sortedTokens[0].length-1; ++i) {
+            System.out.print(" ");
+        }
+        System.out.println(sortedtokens[0][0]);
+        for(int i = 1; i < (2*sortedTokens[0].length -1)/2; ++i) {
+            for(int j = 0; j < 2*sortedTokens[0].length-2*i; ++j) {
+                System.out.print(" ");
+            }
+            System.out.println("/ \\");
+            for(int j = 0; j < 2*sortedTokens[0].length-1-i*2; ++j) {
+                System.out.print(" ");
+            }
+            System.out.print(sortedTokens[0][i]);
+            for(int j = 0; j < 3; ++j) {
+                System.out.print(" ");
+            }
+            System.out.println(sortedTokens[1][i-1]);
+        }
+    }
 }
 

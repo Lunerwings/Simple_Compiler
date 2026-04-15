@@ -45,7 +45,7 @@ public class Main {
         for(int i = 0; i < 2*sortedTokens[0].length-1; ++i) {
             System.out.print(" ");
         }
-        System.out.println(sortedtokens[0][0]);
+        System.out.println(sortedTokens[0][0]);
         for(int i = 1; i < (2*sortedTokens[0].length -1)/2; ++i) {
             for(int j = 0; j < 2*sortedTokens[0].length-2*i; ++j) {
                 System.out.print(" ");

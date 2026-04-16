@@ -76,7 +76,7 @@ public class Parser {
                 yield null;
             }
             default -> {
-                throw new ParserException("Expect number or ')', got "
+                throw new ParserException("Expect number or '(', got "
                         + firstTok.value());
             }
         };

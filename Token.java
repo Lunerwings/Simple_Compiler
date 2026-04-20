@@ -1,5 +1,5 @@
 // TODO: position in the original expression string
-public record Token (String value, Token.Type type) {
+public record Token (String value, Token.Type type, int index) {
     public enum Type {
       NUMBER,
       PLUS,

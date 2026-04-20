@@ -9,8 +9,8 @@ public class Main {
 
         try {
             tokenizer.tokenize(input);
-        } catch(Tokenizer.TokenizerException e) {
-            System.out.println("TODO: log the exception.");
+        } catch(Exception e) {
+            System.err.println("Exception!!!: " + e.getMessage());
             System.exit(69);
         }
         var tokens = tokenizer.tokens();
@@ -25,8 +25,8 @@ public class Main {
 
             System.out.println("Eval: " + ((expr == null) ? "empty" : expr.eval()));
         } catch(Exception e) {
-            System.out.println("Exception!!!: " + e);
-            e.printStackTrace();
+            System.out.println("Exception!!!: " + e.getMessage());
+            System.exit(69);
         }
     }
 

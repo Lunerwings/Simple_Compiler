@@ -15,7 +15,7 @@ public class Parser {
         this.currIdx = 0;
     }
 
-    public Expression parseExpr(List<Token> tokens) throws ParserException {
+    public Expression parseExpr(List<Token> tokens) throws Exception {
         var lhs = parseTerm(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
@@ -23,7 +23,8 @@ public class Parser {
             this.currIdx += 1;
             var rhs = parseTerm(tokens);
             if(rhs == null) {
-                throw new ParserException("Expected expression, got EOF");
+                throw new Exception("Expected expression at "
+                        + tokens.get(tokens.size() - 1).index() + ", got EOF");
             }
             lhs = new Term(nextOp, lhs, rhs);
             nextOp = tokens.get(this.currIdx).type();
@@ -32,7 +33,7 @@ public class Parser {
         return lhs;
     }
 
-    public Expression parseTerm(List<Token> tokens) throws ParserException {
+    public Expression parseTerm(List<Token> tokens) throws Exception {
         var lhs = parseFactor(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
@@ -40,7 +41,8 @@ public class Parser {
             this.currIdx += 1;
             var rhs = parseFactor(tokens);
             if(rhs == null) {
-                throw new ParserException("Expected expression, got EOF");
+                throw new Exception("Expected expression at "
+                        + tokens.get(tokens.size() - 1).index() + ", got EOF");
             }
             lhs = new Factor(nextOp, lhs, rhs);
             nextOp = tokens.get(this.currIdx).type();
@@ -48,7 +50,7 @@ public class Parser {
 
         return lhs;
     }
-    private Expression parseFactor(List<Token> tokens) throws ParserException {
+    private Expression parseFactor(List<Token> tokens) throws Exception {
         assert(!tokens.isEmpty());
         var firstTok = tokens.get(this.currIdx);
 
@@ -58,7 +60,7 @@ public class Parser {
                     this.currIdx += 1;
                     yield new Primary(Integer.parseInt(firstTok.value()));
                 } catch(NumberFormatException e) {
-                    throw new ParserException(e.toString());
+                    throw new Exception(e.toString());
                 }
             }
             case Token.Type.LPAREN -> {
@@ -66,7 +68,8 @@ public class Parser {
                 var ret = this.parseExpr(tokens);
                 if (tokens.size() <= this.currIdx ||
                     tokens.get(this.currIdx).type() != Token.Type.RPAREN) {
-                    throw new ParserException("Expect ')', got "
+                    throw new Exception("Expect ')' at index "
+                            + tokens.get(this.currIdx).index() + ", got "
                             + tokens.get(this.currIdx).value());
                 }
                 this.currIdx += 1;
@@ -76,7 +79,8 @@ public class Parser {
                 yield null;
             }
             default -> {
-                throw new ParserException("Expect number or '(', got "
+                throw new Exception("Expect number or '(' at index "
+                        + firstTok.index() + ", got "
                         + firstTok.value());
             }
         };

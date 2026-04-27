@@ -14,10 +14,11 @@ public class Parser {
     public void reset() {
         this.currIdx = 0;
     }
-
+    public String[][] parse(){
+        return parsedTokens;
+    }
     public Expression parseExpr(List<Token> tokens) throws Exception {
         var lhs = parseTerm(tokens);
-
         var nextOp = tokens.get(this.currIdx).type();
         while(nextOp == Token.Type.PLUS || nextOp == Token.Type.MINUS) {
             this.currIdx += 1;
@@ -87,4 +88,5 @@ public class Parser {
     }
 
     private int currIdx;
+    private String[][] parsedTokens;
 }

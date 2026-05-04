@@ -98,6 +98,9 @@ public class Parser {
             case Token.Type.EOF -> {
                 yield null;
             }
+            case Token.Type.PLUS, Token.Type.MINUS -> {
+                yield parseFactor(tokens);
+            }
             default -> {
                 throw new Exception("Expect number or '(' at index "
                         + firstTok.index() + ", got "

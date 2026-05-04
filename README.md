@@ -27,6 +27,44 @@ java Main
 (((((69))))) + 1
 ```
 
+### Outputs of the examples above
+```txt
+Tokens: [1, +, 1]
+Placeholder printed value: (+ 1 1)
+Eval: 2
+```
+
+```txt
+Tokens: [1, +, 2, +, 3, +, 4, +, 5, +, 6]
+Placeholder printed value: (+ (+ (+ (+ (+ 1 2) 3) 4) 5) 6)
+Eval: 21
+```
+
+```txt
+Tokens: [1, +, 2, *, 3, +, 4, *, 5, /, 2]
+Placeholder printed value: (+ (+ 1 (* 2 3)) (/ (* 4 5) 2))
+Eval: 17
+```
+
+```txt
+Tokens: [1, -, -, -, -, -, -, -, -, -, -, -, 2]
+Placeholder printed value: (- 1 (negate (negate (negate (negate (negate (negate (negate (negate (negate (negate 2)))))))))))
+Eval: -1
+```
+
+```txt
+Enter the expression: 1 + -(+(+(2)))   
+Tokens: [1, +, -, (, +, (, +, (, 2, ), ), )]
+Placeholder printed value: (+ 1 (negate 2))
+Eval: -1
+```
+
+```txt
+Tokens: [(, (, (, (, (, 69, ), ), ), ), ), +, 1]
+Placeholder printed value: (+ 69 1)
+Eval: 70
+```
+
 ## Some inputs that won't work
 ```c
 -1 -

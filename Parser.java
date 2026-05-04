@@ -86,11 +86,16 @@ public class Parser {
             case Token.Type.LPAREN -> {
                 this.currIdx += 1;
                 var ret = this.parseExpr(tokens);
+                if (ret == null) {
+                    throw new Exception("Expect expression at index "
+                            + tokens.get(this.currIdx).index() + ", got "
+                            + tokens.get(this.currIdx).type());
+                }
                 if (tokens.size() <= this.currIdx ||
                     tokens.get(this.currIdx).type() != Token.Type.RPAREN) {
                     throw new Exception("Expect ')' at index "
                             + tokens.get(this.currIdx).index() + ", got "
-                            + tokens.get(this.currIdx).value());
+                            + tokens.get(this.currIdx).type());
                 }
                 this.currIdx += 1;
                 yield ret;

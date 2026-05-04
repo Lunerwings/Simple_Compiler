@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
         var tokenizer = new Tokenizer();
         var scanner = new Scanner(System.in);
         System.out.print("Enter the expression: ");
@@ -29,9 +29,9 @@ public class Main {
 
             System.out.println("Eval: " + ((expr == null) ? "empty" : expr.eval()));
         } catch(Exception e) {
-            throw e;
-            // System.out.println("Exception!!!: " + e.getMessage());
-            // System.exit(69);
+            // throw e;
+            System.out.println("Exception!!!: " + e.getMessage());
+            System.exit(69);
         }
     }
 

@@ -5,6 +5,6 @@ public record Unary(Expression expr) implements Expression {
     }
 
     public String toString() {
-        return "-" + expr.toString();
+        return "(negate " + expr.toString() + ")";
     }
 }

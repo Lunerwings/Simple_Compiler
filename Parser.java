@@ -4,7 +4,7 @@ import java.util.*;
 // This equivalent grammar is how the parser runs:
 // E -> T ([+ | -] T)*
 // T -> F ([* | /] F)*
-// F -> (E) | number
+// F -> (E) | + E | - E | number
 
 public class Parser {
     public Parser() {
@@ -57,11 +57,11 @@ public class Parser {
         return switch(firstTok.type()) {
             case Token.Type.PLUS -> {
                 this.currIdx += 1;
-                yield parsePrimary(tokens);
+                yield parseExpr(tokens);
             }
             case Token.Type.MINUS -> {
                 this.currIdx += 1;
-                var retTok = parsePrimary(tokens);
+                var retTok = parseExpr(tokens);
                 yield new Unary(retTok);
             }
             default -> {
@@ -103,9 +103,9 @@ public class Parser {
             case Token.Type.EOF -> {
                 yield null;
             }
-            case Token.Type.PLUS, Token.Type.MINUS -> {
-                yield parseFactor(tokens);
-            }
+            // case Token.Type.PLUS, Token.Type.MINUS -> {
+            //     yield parseFactor(tokens);
+            // }
             default -> {
                 throw new Exception("Expect number or '(' at index "
                         + firstTok.index() + ", got "

@@ -55,6 +55,26 @@ public class Parser {
         var firstTok = tokens.get(this.currIdx);
 
         return switch(firstTok.type()) {
+            case Token.Type.PLUS -> {
+                this.currIdx += 1;
+                yield parsePrimary(tokens);
+            }
+            case Token.Type.MINUS -> {
+                this.currIdx += 1;
+                var retTok = parsePrimary(tokens);
+                yield new Unary(retTok);
+            }
+            default -> {
+                yield parsePrimary(tokens);
+            }
+        };
+
+    }
+
+    private Expression parsePrimary(List<Token> tokens) throws Exception {
+        var firstTok = tokens.get(this.currIdx);
+
+        return switch(firstTok.type()) {
             case Token.Type.NUMBER -> {
                 try {
                     this.currIdx += 1;

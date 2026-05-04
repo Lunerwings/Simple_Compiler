@@ -22,7 +22,7 @@ public class Main {
             var strExpr = expr.toString();
             // doesn't handle unary expressions
             // printParseTree(strExpr);
-            System.out.println("Parsed expression: " + expr);
+            // System.out.println("Parsed expression: " + expr);
             System.out.println("Placeholder printed value: " + ((expr == null)
                     ? "empty"
                     : expr.toString()));

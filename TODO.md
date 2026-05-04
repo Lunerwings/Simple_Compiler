@@ -14,9 +14,10 @@
     - [x] Expect token, but hit `EOF`.
     - [ ] Optional: we can inherit from `Exception` to extract the index at
     which the exception happens.
-- [ ] Evaluator
+- [x] Evaluator
   - [ ] Current version kind of works, but because of division, we really want
   an `eval` returning `float` or `double` instead.
+- [x] Unary expressions cuz I forgot
 - [ ] Improve the AST printer. Currently, it's printed in Lisp form. We want
 the tree form as shown in the assignment sheet(?).
   - [ ] Actually, do we? The tree form only really works for small expression

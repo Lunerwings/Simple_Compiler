@@ -32,8 +32,15 @@ java Main
 -1 -
 1 +
 1 + (2 + 3
+99999999999999999999 + 1
 ```
 
 ## Quirks
 - Since this is an integer evaluator, floating numbers can't be represented.
 For example, `1 / 2 * 2` is zero, while `1 * 2 / 2` is one.
+- We don't use `BigInteger` or `BigDecimal`, so the result and any immediate
+values are subject to `int` bounds. Inputting a number too large probably will
+hit a `NumberFormatException`.
+- We print unary negation (e.g. `-3`) as `(negate <expr>)` (for our example,
+`(negate 3)`). It's more eye clutter, but it's distinguishable from `-`, which
+is already used in subtraction.

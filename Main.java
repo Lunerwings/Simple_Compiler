@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         var tokenizer = new Tokenizer();
         var scanner = new Scanner(System.in);
         System.out.print("Enter the expression: ");
@@ -20,12 +20,17 @@ public class Main {
         try {
             var expr = parser.parseExpr(tokens);
             var strExpr = expr.toString();
-            // doesn't handle unary expressions
             // printParseTree(strExpr);
             // System.out.println("Parsed expression: " + expr);
             System.out.println("Placeholder printed value: " + ((expr == null)
                     ? "empty"
                     : expr.toString()));
+            // ArrayList<StringBuilder> lines = new ArrayList<>();
+            // lines.add(new StringBuilder());
+            // printWithSpaces(expr, 0, 0, lines);
+            // for(var lnum = 0; lnum < lines.size(); ++lnum) {
+            //     System.out.println(lines.get(lnum).toString());
+            // }
 
             System.out.println("Eval: " + ((expr == null) ? "empty" : expr.eval()));
         } catch(Exception e) {

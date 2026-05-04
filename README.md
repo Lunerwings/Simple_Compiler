@@ -27,6 +27,13 @@ java Main
 (((((69))))) + 1
 ```
 
+## Some inputs that won't work
+```c
+-1 -
+1 +
+1 + (2 + 3
+```
+
 ## Quirks
 - Since this is an integer evaluator, floating numbers can't be represented.
 For example, `1 / 2 * 2` is zero, while `1 * 2 / 2` is one.

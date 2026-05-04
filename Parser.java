@@ -57,11 +57,11 @@ public class Parser {
         return switch(firstTok.type()) {
             case Token.Type.PLUS -> {
                 this.currIdx += 1;
-                yield parseExpr(tokens);
+                yield parsePrimary(tokens);
             }
             case Token.Type.MINUS -> {
                 this.currIdx += 1;
-                var retTok = parseExpr(tokens);
+                var retTok = parsePrimary(tokens);
                 yield new Unary(retTok);
             }
             default -> {
@@ -103,9 +103,9 @@ public class Parser {
             case Token.Type.EOF -> {
                 yield null;
             }
-            // case Token.Type.PLUS, Token.Type.MINUS -> {
-            //     yield parseFactor(tokens);
-            // }
+            case Token.Type.PLUS, Token.Type.MINUS -> {
+                yield parseFactor(tokens);
+            }
             default -> {
                 throw new Exception("Expect number or '(' at index "
                         + firstTok.index() + ", got "

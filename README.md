@@ -18,6 +18,11 @@ java Main
 ```
 
 ## Some inputs that work
+- The tree printer might behave oddly with certain input, so when an input
+errors,  it's best to comment out `printParseTree` in line 23 then retry.
+  - A list of errornerous input is listed
+  [below](#unless-printparsetree-commented-out)
+
 ```c
 1 + 1
 1 + 2 + 3 + 4 + 5 + 6
@@ -71,6 +76,15 @@ Eval: 70
 1 +
 1 + (2 + 3
 99999999999999999999 + 1
+```
+
+### Unless printParseTree commented out
+```c
+-1
+-1 + 2
+1
+23 + 34 // or any input with more than 1 digit per number
+// empty input
 ```
 
 ## Quirks

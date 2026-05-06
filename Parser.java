@@ -4,17 +4,13 @@ import java.util.*;
 // This equivalent grammar is how the parser runs:
 // E -> T ([+ | -] T)*
 // T -> F ([* | /] F)*
-// F -> (E) | + F | - F | number
+// F -> (E) | number
 
 public class Parser {
     public Parser() {
         this.currIdx = 0;
     }
 
-    /**
-     * @brief Not in use right now, but might be useful if we ever want to
-     * allow the parser to parse more than one line of expression.
-     */
     public void reset() {
         this.currIdx = 0;
     }
@@ -23,12 +19,7 @@ public class Parser {
         var lhs = parseTerm(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
-        while(nextOp != Token.Type.EOF) {
-        // while(nextOp == Token.Type.PLUS || nextOp == Token.Type.MINUS) {
-          if(nextOp != Token.Type.PLUS && nextOp != Token.Type.MINUS) {
-            throw new Exception("Expected + or - at index " + tokens.get(this.currIdx).index()
-                + ", got " + nextOp);
-          }
+        while(nextOp == Token.Type.PLUS || nextOp == Token.Type.MINUS) {
             this.currIdx += 1;
             var rhs = parseTerm(tokens);
             if(rhs == null) {
@@ -42,7 +33,7 @@ public class Parser {
         return lhs;
     }
 
-    private Expression parseTerm(List<Token> tokens) throws Exception {
+    public Expression parseTerm(List<Token> tokens) throws Exception {
         var lhs = parseFactor(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
@@ -64,26 +55,6 @@ public class Parser {
         var firstTok = tokens.get(this.currIdx);
 
         return switch(firstTok.type()) {
-            case Token.Type.PLUS -> {
-                this.currIdx += 1;
-                yield parsePrimary(tokens);
-            }
-            case Token.Type.MINUS -> {
-                this.currIdx += 1;
-                var retTok = parsePrimary(tokens);
-                yield new Unary(retTok);
-            }
-            default -> {
-                yield parsePrimary(tokens);
-            }
-        };
-
-    }
-
-    private Expression parsePrimary(List<Token> tokens) throws Exception {
-        var firstTok = tokens.get(this.currIdx);
-
-        return switch(firstTok.type()) {
             case Token.Type.NUMBER -> {
                 try {
                     this.currIdx += 1;
@@ -95,27 +66,17 @@ public class Parser {
             case Token.Type.LPAREN -> {
                 this.currIdx += 1;
                 var ret = this.parseExpr(tokens);
-                if (ret == null) {
-                    throw new Exception("Expect expression at index "
-                            + tokens.get(this.currIdx).index() + ", got "
-                            + tokens.get(this.currIdx).type());
-                }
                 if (tokens.size() <= this.currIdx ||
-                    tokens.get(this.currIdx).type() != Token.Type.RPAREN) {
+                        tokens.get(this.currIdx).type() != Token.Type.RPAREN) {
                     throw new Exception("Expect ')' at index "
                             + tokens.get(this.currIdx).index() + ", got "
-                            + tokens.get(this.currIdx).type());
+                            + tokens.get(this.currIdx).value());
                 }
                 this.currIdx += 1;
                 yield ret;
             }
             case Token.Type.EOF -> {
                 yield null;
-            }
-            case Token.Type.PLUS, Token.Type.MINUS -> {
-                // just because I chose to leave the unary parsing logic on
-                // parseFactor.
-                yield parseFactor(tokens);
             }
             default -> {
                 throw new Exception("Expect number or '(' at index "

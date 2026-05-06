@@ -19,8 +19,8 @@ public class Main {
         var parser = new Parser();
         try {
             var expr = parser.parseExpr(tokens);
-            // var strExpr = expr.toString();
-            // printParseTree(strExpr);
+            var strExpr = expr.toString();
+            printParseTree(strExpr);
             System.out.println("Parsed expression: " + expr);
             System.out.println("Placeholder printed value: " + ((expr == null)
                     ? "empty"
@@ -29,8 +29,8 @@ public class Main {
             System.out.println("Eval: " + ((expr == null) ? "empty" : expr.eval()));
         } catch(Exception e) {
             System.out.println("Exception!!!: " + e.getMessage());
-            // e.printStackTrace();
-            // System.exit(69);
+            e.printStackTrace();
+            System.exit(69);
         }
     }
 

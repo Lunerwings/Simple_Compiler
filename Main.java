@@ -54,7 +54,6 @@ public class Main {
             tokens.add(expr.substring(i, i + 1));
         }
         ArrayList<ArrayList<String>> list = new ArrayList<>();
-        System.out.println("this is the tokens: " + tokens);
         for(int i = 0; i < tokens.size(); ++i) {
             if(i >= 2 &&i <= tokens.size() - 3) {
                 if ((tokens.get(i-1).equals("+")||tokens.get(i-1).equals("-")
@@ -158,7 +157,30 @@ public class Main {
             }
         }
         for(int i = 0; i < list.size(); i++){
-            //for(int j = 0; j < (2*list.size())-i*2; j++){
+
+            for(int j = 0; (j < (int)Math.pow(2,list.size()-i)-1)&&i!=0; j++){
+                System.out.print(" ");
+            }
+            if(i!= 0 && i!= list.size()){
+                for(int j = 0; j < list.get(i).size(); j++){
+                    if (list.get(i).get(j) != null) {
+                        if(j%2==0){
+                            System.out.print("/");
+                        }else{
+                            System.out.print("\\");
+                        }
+                        for(int k = 0; k < (int)Math.pow(2,list.size()-i+1)-1; k++){
+                            System.out.print(" ");
+                        }
+                    } else {
+                        System.out.print(" ");
+                        for(int k = 0; k < (int)Math.pow(2,list.size()-i+1)-1; k++){
+                            System.out.print(" ");
+                        }
+                    }
+                }
+                System.out.println();
+            }
             for(int j = 0; j < (int)Math.pow(2,list.size()-i)-1; j++){
                 System.out.print(" ");
             }

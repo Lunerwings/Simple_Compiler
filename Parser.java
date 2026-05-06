@@ -4,7 +4,7 @@ import java.util.*;
 // This equivalent grammar is how the parser runs:
 // E -> T ([+ | -] T)*
 // T -> F ([* | /] F)*
-// F -> (E) | number
+// F -> (E) | + E | - E | number
 
 public class Parser {
     public Parser() {
@@ -55,6 +55,26 @@ public class Parser {
         var firstTok = tokens.get(this.currIdx);
 
         return switch(firstTok.type()) {
+            case Token.Type.PLUS -> {
+                this.currIdx += 1;
+                yield parsePrimary(tokens);
+            }
+            case Token.Type.MINUS -> {
+                this.currIdx += 1;
+                var retTok = parsePrimary(tokens);
+                yield new Unary(retTok);
+            }
+            default -> {
+                yield parsePrimary(tokens);
+            }
+        };
+
+    }
+
+    private Expression parsePrimary(List<Token> tokens) throws Exception {
+        var firstTok = tokens.get(this.currIdx);
+
+        return switch(firstTok.type()) {
             case Token.Type.NUMBER -> {
                 try {
                     this.currIdx += 1;
@@ -66,17 +86,25 @@ public class Parser {
             case Token.Type.LPAREN -> {
                 this.currIdx += 1;
                 var ret = this.parseExpr(tokens);
+                if (ret == null) {
+                    throw new Exception("Expect expression at index "
+                            + tokens.get(this.currIdx).index() + ", got "
+                            + tokens.get(this.currIdx).type());
+                }
                 if (tokens.size() <= this.currIdx ||
                         tokens.get(this.currIdx).type() != Token.Type.RPAREN) {
                     throw new Exception("Expect ')' at index "
                             + tokens.get(this.currIdx).index() + ", got "
-                            + tokens.get(this.currIdx).value());
+                            + tokens.get(this.currIdx).type());
                 }
                 this.currIdx += 1;
                 yield ret;
             }
             case Token.Type.EOF -> {
                 yield null;
+            }
+            case Token.Type.PLUS, Token.Type.MINUS -> {
+                yield parseFactor(tokens);
             }
             default -> {
                 throw new Exception("Expect number or '(' at index "

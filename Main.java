@@ -157,15 +157,39 @@ public class Main {
                 }
             }
         }
-
-        System.out.println(list);
+        for(int i = 0; i < list.size(); i++){
+            //for(int j = 0; j < (2*list.size())-i*2; j++){
+            for(int j = 0; j < (int)Math.pow(2,list.size()-i)-1; j++){
+                System.out.print(" ");
+            }
+            for(int j = 0; j < list.get(i).size(); j++){
+                if (list.get(i).get(j) != null) {
+                    System.out.print(list.get(i).get(j));
+                    for(int k = 0; k < (int)Math.pow(2,list.size()-i+1)-1; k++){
+                        System.out.print(" ");
+                    }
+                } else {
+                    System.out.print(" ");
+                    for(int k = 0; k < (int)Math.pow(2,list.size()-i+1)-1; k++){
+                        System.out.print(" ");
+                    }
+                }
+            }
+            System.out.println();
+        }
 
 
     }
 }
-
+//           -
+//          / \
+//         3
 //(3 + 2)- 5*6
 //1+(3*6)
 //(3*2)*6-4*5+6*7+(4*7)
 //(3+2)*(6+7)
 //(3*6)+1+(3*6)*7)
+
+//our if statment (!tokens.get(i-1).equals("(")&&!tokens.get(i-1).equals(")"))
+//                && (!tokens.get(i+1).equals("(")&&!tokens.get(i+1).equals(")"))
+//                && (!tokens.get(i).equals("(")&&!tokens.get(i).equals(")"))

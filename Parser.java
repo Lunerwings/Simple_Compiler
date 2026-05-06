@@ -4,13 +4,17 @@ import java.util.*;
 // This equivalent grammar is how the parser runs:
 // E -> T ([+ | -] T)*
 // T -> F ([* | /] F)*
-// F -> (E) | + E | - E | number
+// F -> (E) | + F | - F | number
 
 public class Parser {
     public Parser() {
         this.currIdx = 0;
     }
 
+    /**
+     * @brief Not in use right now, but might be useful if we ever want to
+     * allow the parser to parse more than one line of expression.
+     */
     public void reset() {
         this.currIdx = 0;
     }
@@ -19,7 +23,12 @@ public class Parser {
         var lhs = parseTerm(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
-        while(nextOp == Token.Type.PLUS || nextOp == Token.Type.MINUS) {
+        while(nextOp != Token.Type.EOF) {
+        // while(nextOp == Token.Type.PLUS || nextOp == Token.Type.MINUS) {
+          if(nextOp != Token.Type.PLUS && nextOp != Token.Type.MINUS) {
+            throw new Exception("Expected + or - at index " + tokens.get(this.currIdx).index()
+                + ", got " + nextOp);
+          }
             this.currIdx += 1;
             var rhs = parseTerm(tokens);
             if(rhs == null) {
@@ -33,7 +42,7 @@ public class Parser {
         return lhs;
     }
 
-    public Expression parseTerm(List<Token> tokens) throws Exception {
+    private Expression parseTerm(List<Token> tokens) throws Exception {
         var lhs = parseFactor(tokens);
 
         var nextOp = tokens.get(this.currIdx).type();
@@ -104,6 +113,8 @@ public class Parser {
                 yield null;
             }
             case Token.Type.PLUS, Token.Type.MINUS -> {
+                // just because I chose to leave the unary parsing logic on
+                // parseFactor.
                 yield parseFactor(tokens);
             }
             default -> {
